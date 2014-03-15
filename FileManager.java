@@ -91,7 +91,7 @@ public class FileManager {
         return _cols;
     }
     
-    public static int updateMovieInventory(String name, String val, String file, String type) throws IOException{
+    public static boolean updateMovieInventory(String name, String val, String file, String type) throws IOException{
     	BufferedReader reader = new BufferedReader(new FileReader(file));
 		String line = null;
 		int row = 0, pos = 0;
@@ -118,12 +118,11 @@ public class FileManager {
 			put(3, pos, val);
 		} else {
 			System.out.println("Unknow type: " + type);
-			return 1;
+			return false;
 		}
-		
 		save(new File(file));
 		System.out.println("Update Complete");
-		return 0;
+		return true;
     }
     
     public static boolean findOne(String match, String file) throws IOException {
