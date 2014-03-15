@@ -1,7 +1,5 @@
 package VideoStore;
 
-import java.util.Date;
-
 public class Movie {
 
         private String name;
@@ -38,7 +36,7 @@ public class Movie {
         }
 
         public void setBuyAmount(double buyAmount) {
-            this.rentAmount = buyAmount;
+            this.buyAmount = buyAmount;
         }
 
         public int getNbAvailable() {

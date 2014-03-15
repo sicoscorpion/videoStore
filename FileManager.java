@@ -168,7 +168,7 @@ public class FileManager {
 		PrintWriter pw = new PrintWriter(fw, true);
 		for (Person person : sampleList)
         {
-			if (findOne(person.getFirstName(), file) == true) {
+			if (findOne(person.getUsername(), file) == true) {
 				System.out.println("This Item exist, use the update function to update it");
 				return;
 			}
@@ -188,7 +188,7 @@ public class FileManager {
         fw.close();
 	}
     
-    public static int updatePeopleList(String name, String val, String file, String type) throws IOException{
+    public static int updatePeopleList(String name, String val, String file, String type) throws IOException {
     	BufferedReader reader = new BufferedReader(new FileReader(file));
 		String line = null;
 		int row = 0, pos = 0;
@@ -224,5 +224,40 @@ public class FileManager {
 		System.out.println("Update Complete");
 		return 0;
     }
-    
+    public static Person findPerson(String username, String password, String file) throws IOException {
+    	BufferedReader reader = new BufferedReader(new FileReader(file));
+		String line = null;
+		Person person = new Person();
+		while ((line = reader.readLine()) != null) {
+			String[] items = line.split(CSV_SEPARATOR);
+			for (int i = 0; i < items.length; i++){
+				if (items[i].equals(username) && items[3].equals(password)) {
+					person = new Person(items[0], items[1], items[2], items[3], items[4]);
+//					System.out.println(person);
+					reader.close();
+					return person;
+				}
+			}
+		}
+		reader.close();
+		return person;
+    }
+    public static Movie findMovie(String name, String file) throws IOException {
+    	BufferedReader reader = new BufferedReader(new FileReader(file));
+		String line = null;
+		Movie movie = new Movie();
+		while ((line = reader.readLine()) != null) {
+			String[] items = line.split(CSV_SEPARATOR);
+			for (int i = 0; i < items.length; i++){
+				if (items[i].equals(name)) {
+					movie = new Movie(items[0], Double.parseDouble(items[1])
+							,  Double.parseDouble(items[2]), Integer.parseInt(items[3]));
+					reader.close();
+					return movie;
+				}
+			}
+		}
+		reader.close();
+		return movie;
+    }
 }
