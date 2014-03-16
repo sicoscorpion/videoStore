@@ -1,9 +1,10 @@
 package VideoStore;
+/**
+ * partial GUI implementation
+ */
 
 import java.awt.*;
-
 import javax.swing.*;
-
 import java.awt.event.*;
 
 public class storeGUI extends JFrame
@@ -73,9 +74,9 @@ public class storeGUI extends JFrame
 			Person person = new Person();
 			person = csv.findPerson(userName, passWord, "src/people.csv");
 			if(person.getUsername() != null && person.getPassword() != null) {
-				if (person.getRole() == "user") {
+//				if (person.getRole() == "user") {
 					lblWelcome.setText("Welcome : " + person.getUsername());
-				}
+//				}
 				status = true;
 			} else {
 				JOptionPane.showMessageDialog(null, "Incorrect Username/Password");
