@@ -1,11 +1,15 @@
 package VideoStore;
-
 import java.util.Date;
+
+/**
+ * Rented objects definition
+ * @author Fady Abdelmohsen 100106924
+ * 
+ */
 
 public class Rented {
 
         private String movie;
-        private int quantity;
         private double price;
         private Date expDate;
         private String username;

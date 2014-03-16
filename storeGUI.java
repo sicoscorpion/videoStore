@@ -17,15 +17,14 @@ public class storeGUI extends JFrame
             
 		// Create Form Frame
 		super("Video Store");
+		setLayout(new FlowLayout());
 		setSize(679, 385);
 		setLocation(500, 280);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		
 		
 		// Menu Bar
-        JMenuBar menuBar=new JMenuBar();
-        
-        // Menu 1
+        JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
         JMenuItem exit = new JMenuItem("Exit");
         exit.setToolTipText("close");
@@ -51,9 +50,9 @@ public class storeGUI extends JFrame
         menuBar.add(file);
         setJMenuBar(menuBar);
         
-		lblWelcome = new JLabel("lblWelcome",JLabel.CENTER);
+		lblWelcome = new JLabel("Message", JLabel.LEFT);
 		lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblWelcome.setBounds(168, 153, 336, 25);
+		lblWelcome.setBounds(0, 0, 336, 25);
 		getContentPane().add(lblWelcome);
 		
 		// When Frame Loaded
@@ -74,7 +73,9 @@ public class storeGUI extends JFrame
 			Person person = new Person();
 			person = csv.findPerson(userName, passWord, "src/people.csv");
 			if(person.getUsername() != null && person.getPassword() != null) {
-				lblWelcome.setText("Welcome : " + person.getUsername());
+				if (person.getRole() == "user") {
+					lblWelcome.setText("Welcome : " + person.getUsername());
+				}
 				status = true;
 			} else {
 				JOptionPane.showMessageDialog(null, "Incorrect Username/Password");

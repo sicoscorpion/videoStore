@@ -8,9 +8,11 @@ import java.util.Date;
 public class RentOperations {
 	
 	private static final String CSV_SEPARATOR = ",";
+	
+	// TODO implement method pay(movie:Movie, person:Person)
+	
 	public static boolean rentMovie(Movie movie, Person person, 
 			Date expDate, boolean paid) throws IOException {
-//		System.out.println("RENTED");
 		FileManager csv = new FileManager();
 		if (person.getUsername() == null || movie.getName() == null) {
 			System.out.println("rent failed");
@@ -64,4 +66,7 @@ public class RentOperations {
         fw.close();
         return true;
 	}
+	
+	// TODO implement method generateRecipt(rented:Rented)
+
 }

@@ -1,7 +1,10 @@
 package VideoStore;
 
-import java.util.Date;
-
+/**
+ * A bought object definitions
+ * @author Fady Abdelmohsen 100106924
+ *
+ */
 public class Bought {
 
         private String movie;

@@ -1,7 +1,12 @@
 package VideoStore;
+/**
+ * A movie object definition
+ * @author Fady Abdelmohsen 100106924
+ * NOTE: This object is not yet complete, a genre field will be added
+ */
 
 public class Movie {
-
+		// TODO add genre
         private String name;
         private double rentAmount;
         private double buyAmount;
@@ -9,7 +14,8 @@ public class Movie {
         
         public Movie() {}
         
-        public Movie(String name, double rentAmount, double buyAmount, int nbAvailable) {   
+        public Movie(String name, double rentAmount, double buyAmount, 
+        		int nbAvailable) {   
         	this.name = name;
         	this.rentAmount = rentAmount;
         	this.buyAmount = buyAmount;
