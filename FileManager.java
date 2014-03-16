@@ -12,6 +12,7 @@ public class FileManager {
     private static HashMap<Point, String> _map = new HashMap<Point, String>();
     private static int _cols;
     private static int _rows;
+	private static PrintWriter pw;
  
     public static void open(File file) throws FileNotFoundException, IOException {
         open(file, ',');
@@ -91,7 +92,7 @@ public class FileManager {
         return _cols;
     }
     
-    public static boolean updateMovieInventory(String name, String val, String file, String type) throws IOException{
+    public boolean updateMovieInventory(String name, String val, String file, String type) throws IOException{
     	BufferedReader reader = new BufferedReader(new FileReader(file));
 		String line = null;
 		int row = 0, pos = 0;
@@ -142,7 +143,7 @@ public class FileManager {
 	}
     public static void addNewMovie(ArrayList<Movie> sampleList, String file) throws IOException {
 		FileWriter fw = new FileWriter(file, true);
-		PrintWriter pw = new PrintWriter(fw, true);
+		pw = new PrintWriter(fw, true);
 		for (Movie movie : sampleList)
         {
 			if (findOne(movie.getName(), file) == true) {
@@ -164,7 +165,7 @@ public class FileManager {
 	}
     public static void addNewPerson(ArrayList<Person> sampleList, String file) throws IOException {
 		FileWriter fw = new FileWriter(file, true);
-		PrintWriter pw = new PrintWriter(fw, true);
+		pw = new PrintWriter(fw, true);
 		for (Person person : sampleList)
         {
 			if (findOne(person.getUsername(), file) == true) {

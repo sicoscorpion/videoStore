@@ -3,25 +3,24 @@ package VideoStore;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class RentOperations {
 	
 	private static final String CSV_SEPARATOR = ",";
 	public static boolean rentMovie(Movie movie, Person person, 
-			Date expDate, int quantity) throws IOException {
+			Date expDate, boolean paid) throws IOException {
 //		System.out.println("RENTED");
 		FileManager csv = new FileManager();
 		if (person.getUsername() == null || movie.getName() == null) {
 			System.out.println("rent failed");
 			return false;
 		} else {
-			if (movie.getNbAvailable() >= quantity) {
-				int remaining = movie.getNbAvailable() - quantity;
+			if (movie.getNbAvailable() >= 1 && paid == true) {
+				int remaining = movie.getNbAvailable() - 1;
 				
-				Rented rented = new Rented(movie.getName(), quantity, 
-					movie.getRentAmount(), expDate, person.getUsername());
+				Rented rented = new Rented(movie.getName(), 
+					movie.getRentAmount(), expDate, person.getUsername(), paid);
 				boolean retRented = addNewRent(rented, "src/rentedMovies.csv");
 				if (retRented == true) {
 					boolean retUpdate = csv.updateMovieInventory(movie.getName(), Integer.toString(remaining)
@@ -51,13 +50,13 @@ public class RentOperations {
 		}
 		pw.append(rented.getMovie());
 		pw.append(CSV_SEPARATOR);
-		pw.print(rented.getQuantity());
-		pw.append(CSV_SEPARATOR);
 		pw.print(rented.getPrice());
 		pw.append(CSV_SEPARATOR);
 		pw.print(rented.getExpDate());
 		pw.append(CSV_SEPARATOR);
 		pw.print(rented.getUsername());
+		pw.append(CSV_SEPARATOR);
+		pw.print(rented.getPaid());
 		pw.print("\n");
 		
         pw.flush();

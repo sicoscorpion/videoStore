@@ -1,55 +1,114 @@
 package VideoStore;
 
 import java.awt.*;
+
 import javax.swing.*;
+
 import java.awt.event.*;
 
 public class storeGUI extends JFrame
 {
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 600;
-	
-	private JLabel name, amout, rent;
-	private JTextField nameTF, widthTF, areaTF;
-	private JButton find, exitB;
-	
-	//Button handlers:
-//	private CalculateButtonHandler cbHandler;
-	private ExitButtonHandler ebHandler;
+	private static String userName;
+	private static String passWord;
+	private static FileManager csv = new FileManager();
+	static JLabel lblWelcome;
 	
 	public storeGUI() {
-		//Instantiate the labels:
-		name = new JLabel("Enter the movie name: ", SwingConstants.LEFT);
-			
-			//Text fields next:
-		nameTF = new JTextField();
+            
+		// Create Form Frame
+		super("Video Store");
+		setSize(679, 385);
+		setLocation(500, 280);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 		
-		find = new JButton("Find");
-		exitB = new JButton("Exit");
-			
-		setTitle("Video Store");
-		Container pane = getContentPane();		
-		pane.setLayout(new GridLayout(5, 2));
-			
-		pane.add(name);
-		pane.add(nameTF);
-			
-		setSize(WIDTH, HEIGHT);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		// Menu Bar
+        JMenuBar menuBar=new JMenuBar();
+        
+        // Menu 1
+        JMenu file = new JMenu("File");
+        JMenuItem exit = new JMenuItem("Exit");
+        exit.setToolTipText("close");
+        exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+            	JOptionPane.showMessageDialog(null,
+            			"See You!");
+            	System.exit(0);
+            }
+        });
+        JMenuItem logout = new JMenuItem("Logout");
+        logout.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent event) {
+        		getContentPane().removeAll();
+        		JOptionPane.showMessageDialog(null,
+            			"logged out!");
+        				LoginDialog();
+        			
+        	}
+        });
+        file.add(logout);
+        file.add(exit);
+        menuBar.add(file);
+        setJMenuBar(menuBar);
+        
+		lblWelcome = new JLabel("lblWelcome",JLabel.CENTER);
+		lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblWelcome.setBounds(168, 153, 336, 25);
+		getContentPane().add(lblWelcome);
+		
+		// When Frame Loaded
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				LoginDialog();
+			}
+		});
+					
 	}
 	
-	public class ExitButtonHandler implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			System.exit(0);
+	public static Boolean getLogin() {
+		
+		Boolean status = false;
+		
+		try {
+			Person person = new Person();
+			person = csv.findPerson(userName, passWord, "src/people.csv");
+			if(person.getUsername() != null && person.getPassword() != null) {
+				lblWelcome.setText("Welcome : " + person.getUsername());
+				status = true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Incorrect Username/Password");
+			}
+             
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
 		}
+		
+		return status;
 	}
 	
-//	public static void main(String[] args)
-//	{
-//		storeGUI rectObj = new storeGUI();
-//	}
-//	
+	public static void LoginDialog() {
+
+		JLabel title = new JLabel("Login Username and Password");
+		JTextField username = new JTextField();
+		JPasswordField password = new JPasswordField();
+		final JComponent[] inputs = new JComponent[] {
+				title,
+				new JLabel("Username"),
+				username,
+				new JLabel("Password"),
+				password
+		};
+		JOptionPane.showMessageDialog(null, inputs, "Login", JOptionPane.PLAIN_MESSAGE);
+		
+		userName = username.getText();
+		passWord =  new String(password.getPassword()); 
+		if(!getLogin())
+		{
+			LoginDialog();
+		}
+		
+	}
 }
